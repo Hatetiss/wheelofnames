@@ -70,3 +70,7 @@ button:hover {
         text-align: left;
     }
 }
+#spin-button {
+    display: block;
+    margin: 20px auto;
+}

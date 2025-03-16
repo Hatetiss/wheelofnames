@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wheelofnames</title>
+    <title>Wheel of Names</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
+    <h1>🎡 Vòng Quay May Mắn 🎉</h1>
+
+    <div class="input-area">
+        <input type="text" id="nameInput" placeholder="Nhập tên...">
+        <button onclick="addName()">Thêm</button>
+    </div>
+
+    <ul id="nameList"></ul> <!-- Danh sách tên -->
+
+    <div class="wheel-container">
+        <canvas id="wheelCanvas"></canvas> <!-- Vòng quay -->
+    </div>
+
+    <button onclick="spinWheel()">Quay Số 🎡</button>
+
+    <p id="result"></p> <!-- Kết quả trúng thưởng -->
+
+    <script src="script.js"></script>
 </body>
 </html>

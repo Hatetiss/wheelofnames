@@ -1,16 +1,15 @@
 let names = []; // Mảng chứa danh sách tên
 const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
+let spinning = false; // Trạng thái quay
+let angle = 0; // Góc quay hiện tại
+let spinSpeed = 0; // Tốc độ quay
 
-// Định dạng canvas hình tròn
-canvas.width = 300;
-canvas.height = 300;
-
-// Thêm sự kiện Enter để nhập tên
-document.getElementById("nameInput").addEventListener("keydown", function(event) {
+// Xử lý khi bấm Enter
+document.getElementById("nameInput").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
-        event.preventDefault();
-        addName();
+        event.preventDefault(); // Ngăn form submit mặc định
+        addName(); // Gọi hàm thêm tên
     }
 });
 
@@ -26,58 +25,98 @@ function addName() {
     }
 }
 
-// Cập nhật danh sách tên hiển thị
+// Cập nhật danh sách tên hiển thị (có nút chỉnh sửa & xóa)
 function updateNameList() {
     let nameList = document.getElementById("nameList");
     nameList.innerHTML = "";
-    names.forEach(name => {
+    names.forEach((name, index) => {
         let li = document.createElement("li");
-        li.textContent = name;
+
+        let nameSpan = document.createElement("span");
+        nameSpan.textContent = name;
+        nameSpan.contentEditable = true;
+        nameSpan.onblur = function () { editName(index, this.textContent.trim()); }; // Sửa tên
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "❌";
+        deleteBtn.onclick = function () { deleteName(index); };
+
+        li.appendChild(nameSpan);
+        li.appendChild(deleteBtn);
         nameList.appendChild(li);
     });
 }
 
-// Vẽ vòng quay
+// Sửa tên trong danh sách
+function editName(index, newName) {
+    if (newName) {
+        names[index] = newName;
+        drawWheel();
+    }
+}
+
+// Xóa tên
+function deleteName(index) {
+    names.splice(index, 1);
+    updateNameList();
+    drawWheel();
+}
+
+// Vẽ vòng quay (Màu random)
 function drawWheel() {
     if (names.length === 0) return;
     let total = names.length;
-    let angle = 2 * Math.PI / total;
+    let sliceAngle = 2 * Math.PI / total;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(angle); // Xoay vòng quay
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     names.forEach((name, index) => {
-        let startAngle = index * angle;
-        let endAngle = (index + 1) * angle;
-
-        // Vẽ từng phần
         ctx.beginPath();
         ctx.moveTo(150, 150);
-        ctx.arc(150, 150, 150, startAngle, endAngle);
-        ctx.closePath();
-        ctx.fillStyle = index % 2 === 0 ? "#ff5733" : "#33c3ff";
+        ctx.arc(150, 150, 150, index * sliceAngle, (index + 1) * sliceAngle);
+        ctx.fillStyle = getRandomColor();
         ctx.fill();
-        ctx.strokeStyle = "#000";
         ctx.stroke();
 
-        // Vẽ tên
-        let textAngle = startAngle + angle / 2;
-        let x = 150 + Math.cos(textAngle) * 100;
-        let y = 150 + Math.sin(textAngle) * 100;
-        
+        // Hiển thị tên
         ctx.fillStyle = "white";
         ctx.font = "14px Arial";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(name, x, y);
+        let textAngle = (index + 0.5) * sliceAngle;
+        let x = 150 + Math.cos(textAngle) * 100;
+        let y = 150 + Math.sin(textAngle) * 100;
+        ctx.fillText(name, x - ctx.measureText(name).width / 2, y);
     });
+
+    ctx.resetTransform(); // Reset để không bị xoay chồng lên nhau
 }
 
-// Quay vòng
+// Random màu sáng
+function getRandomColor() {
+    return `hsl(${Math.random() * 360}, 100%, 70%)`;
+}
+
+// Quay vòng với hiệu ứng
 function spinWheel() {
-    if (names.length === 0) return;
-    let winnerIndex = Math.floor(Math.random() * names.length);
-    let result = document.getElementById("result");
-    result.textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;
+    if (names.length === 0 || spinning) return;
+    spinning = true;
+    spinSpeed = Math.random() * 10 + 20; // Tốc độ ngẫu nhiên
+
+    function animateSpin() {
+        if (spinSpeed > 0.2) {
+            angle += spinSpeed * Math.PI / 180;
+            spinSpeed *= 0.98; // Giảm tốc từ từ
+            drawWheel();
+            requestAnimationFrame(animateSpin);
+        } else {
+            spinning = false;
+            let winnerIndex = Math.floor((angle % (2 * Math.PI)) / (2 * Math.PI / names.length));
+            document.getElementById("result").textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;
+        }
+    }
+    animateSpin();
 }
 
 // Khi load trang, vẽ vòng quay

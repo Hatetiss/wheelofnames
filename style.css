@@ -19,15 +19,18 @@ body {
     gap: 20px;
 }
 
-/* Đảm bảo canvas luôn là hình tròn */
-#wheelCanvas {
-    width: 300px; /* Hoặc chỉnh max-width theo ý muốn */
-    height: 300px; /* Đảm bảo chiều rộng = chiều cao */
-    border-radius: 50%;
-    border: 5px solid #333;
-    display: block;
-    margin: auto;
+#wheel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
 }
+canvas {
+    display: block;
+    margin: 0 auto;
+}
+
 
 
 /* --- Danh sách tên gọn gàng hơn --- */

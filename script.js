@@ -38,6 +38,7 @@ function updateNameList() {
         nameSpan.onblur = function () { editName(index, this.textContent.trim()); }; // Sửa tên
 
         let deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("delete-button");
         deleteBtn.textContent = "Xoá Thành Phần";
         deleteBtn.onclick = function () { deleteName(index); };
 

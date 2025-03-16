@@ -10,7 +10,21 @@ body {
     text-align: center;
     padding: 20px;
 }
+.delete-button {
+    background: none;
+    color: red;
+    border: none;
+    font-size: 16px;
+    padding: 5px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
+.delete-button:hover {
+    background: darkred;
+    color: white;
+}
 /* --- Bố cục chính: hàng ngang trên PC, cột dọc trên ĐT --- */
 .container {
     display: flex;

@@ -19,19 +19,41 @@ body {
     gap: 20px;
 }
 
+/* --- Đảm bảo vòng quay không méo và luôn căn giữa --- */
 #wheel-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100%;
+    max-width: 400px; /* Định giới hạn tối đa */
 }
+
 canvas {
+    width: 100%;
+    max-width: 350px; /* Kích thước hợp lý cho cả PC & ĐT */
+    height: auto;
     display: block;
     margin: 0 auto;
 }
 
+/* --- Căn chỉnh input và nút Thêm ngay hàng thẳng lối --- */
+.input-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
 
+input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
 
 /* --- Danh sách tên gọn gàng hơn --- */
 #nameList {
@@ -59,6 +81,14 @@ button:hover {
     background-color: #218838;
 }
 
+/* --- Đảm bảo nút "Quay số" luôn ở giữa --- */
+#spin-button {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 200px;
+}
+
 /* --- Responsive: Chỉ áp dụng khi màn hình rộng trên 768px (PC) --- */
 @media (min-width: 768px) {
     .container {
@@ -69,8 +99,4 @@ button:hover {
         font-size: 20px;
         text-align: left;
     }
-}
-#spin-button {
-    display: block;
-    margin: 20px auto;
 }

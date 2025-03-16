@@ -16,13 +16,17 @@
 
     <ul id="nameList"></ul> <!-- Danh sách tên -->
 
-    <div class="wheel-container">
-        <canvas id="wheelCanvas"></canvas> <!-- Vòng quay -->
-    </div>
+    <div class="container">
+        <div>
+            <input type="text" id="nameInput" placeholder="Nhập tên..." />
+            <button onclick="addName()">Thêm</button>
+            <ul id="nameList"></ul>
+        </div>
+        <canvas id="wheelCanvas"></canvas>
+</div>
+<button onclick="spinWheel()">Quay Số 🎲</button>
+<p id="result"></p>
 
-    <button onclick="spinWheel()">Quay Số 🎡</button>
-
-    <p id="result"></p> <!-- Kết quả trúng thưởng -->
 
     <script src="script.js"></script>
 </body>

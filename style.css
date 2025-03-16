@@ -19,13 +19,16 @@ body {
     gap: 20px;
 }
 
+/* Đảm bảo canvas luôn là hình tròn */
 #wheelCanvas {
-    width: 90vw; /* Chiếm 90% chiều rộng màn hình */
-    max-width: 400px; /* Tối đa 400px trên PC */
-    height: auto;
+    width: 300px; /* Hoặc chỉnh max-width theo ý muốn */
+    height: 300px; /* Đảm bảo chiều rộng = chiều cao */
     border-radius: 50%;
-    border: 8px solid #333;
+    border: 5px solid #333;
+    display: block;
+    margin: auto;
 }
+
 
 /* --- Danh sách tên gọn gàng hơn --- */
 #nameList {

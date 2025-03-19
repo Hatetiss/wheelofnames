@@ -66,6 +66,7 @@ function mau() {
     for (int i = names.size(); i++) {
         luumau.add(getRandomColor());
     }
+}
 // Vẽ vòng quay (Màu random)
 function drawWheel() {
     if (names.length === 0) return;

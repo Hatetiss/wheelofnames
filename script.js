@@ -61,6 +61,11 @@ function deleteName(index) {
     updateNameList();
     drawWheel();
 }
+luumau= [];
+function mau() {
+    for (int i = names.size(); i++) {
+        luumau.add(getRandomColor());
+    }
 // Vẽ vòng quay (Màu random)
 function drawWheel() {
     if (names.length === 0) return;
@@ -76,7 +81,7 @@ function drawWheel() {
         ctx.beginPath();
         ctx.moveTo(canvas.width / 2, canvas.height / 2);
         ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, index * sliceAngle, (index + 1) * sliceAngle);
-        ctx.fillStyle = getRandomColor() ;
+        ctx.fillStyle = luumau.get(index) ;
         ctx.fill();
         ctx.stroke();
 
@@ -84,8 +89,8 @@ function drawWheel() {
         ctx.fillStyle = "white";
         ctx.font = "14px Arial";
         let textAngle = (index + 0.5) * sliceAngle;
-        let x = 150 + Math.cos(textAngle) * 100;
-        let y = 150 + Math.sin(textAngle) * 100;
+        let x = canvas.width / 2 + Math.cos(textAngle) * 100;
+        let y = canvas.width / 2 + Math.sin(textAngle) * 100;
         ctx.fillText(name, x - ctx.measureText(name).width / 2, y);
     });
 

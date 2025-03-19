@@ -1,4 +1,5 @@
 let names = []; // Mảng chứa danh sách tên
+let luumau= [];
 const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
 let spinning = false; // Trạng thái quay
@@ -19,6 +20,7 @@ function addName() {
     let name = nameInput.value.trim();
     if (name) {
         names.push(name);
+        luumau.push(getRandomColor());
         updateNameList();
         nameInput.value = "";
         drawWheel();
@@ -52,21 +54,18 @@ function updateNameList() {
 function editName(index, newName) {
     if (newName) {
         names[index] = newName;
-        mau();
+        luumau[index]= getRandomColor();
         drawWheel();
     }
 }
 // Xóa tên
 function deleteName(index) {
     names.splice(index, 1);
+    luumau.splice(index, 1);
     updateNameList();
-    luumau.pop();
     drawWheel();
 }
-luumau= [];
-function mau() {
-        luumau.push(getRandomColor());
-    }
+
 // Vẽ vòng quay (Màu random)
 function drawWheel() {
     if (names.length === 0) return;
@@ -117,7 +116,7 @@ function spinWheel() {
             requestAnimationFrame(animateSpin);
         } else {
             spinning = false;
-            let winnerIndex = Math.floor((angle % (2 * Math.PI)) / (2 * Math.PI / names.length));
+            let winnerIndex = Math.floor(((angle % (2 * Math.PI)) / (2 * Math.PI)) * names.length);
             document.getElementById("result").textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;
         }
     }

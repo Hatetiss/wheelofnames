@@ -55,14 +55,16 @@ function editName(index, newName) {
         drawWheel();
     }
 }
-
+let mau = [];
 // Xóa tên
 function deleteName(index) {
     names.splice(index, 1);
     updateNameList();
     drawWheel();
 }
-
+function luumau() {
+    mau = names.map(() => getRandomColor());
+}
 // Vẽ vòng quay (Màu random)
 function drawWheel() {
     if (names.length === 0) return;
@@ -78,7 +80,7 @@ function drawWheel() {
         ctx.beginPath();
         ctx.moveTo(150, 150);
         ctx.arc(150, 150, 150, index * sliceAngle, (index + 1) * sliceAngle);
-        ctx.fillStyle = getRandomColor();
+        ctx.fillStyle = mau[index];
         ctx.fill();
         ctx.stroke();
 

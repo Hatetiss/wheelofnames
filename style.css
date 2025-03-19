@@ -41,14 +41,14 @@ body {
     flex-direction: column;
     width: 100%;
     max-width: 400px; /* Định giới hạn tối đa */
+    margin: 0 auto;
 }
 
 canvas {
     width:200%;
-    max-width: 800px; /* Kích thước hợp lý cho cả PC & ĐT */
     height: auto;
     display: block;
-    margin: 0 auto;
+    
 }
 
 /* --- Căn chỉnh input và nút Thêm ngay hàng thẳng lối --- */

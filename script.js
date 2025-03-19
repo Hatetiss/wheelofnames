@@ -52,6 +52,7 @@ function updateNameList() {
 function editName(index, newName) {
     if (newName) {
         names[index] = newName;
+        luumau();
         drawWheel();
     }
 }

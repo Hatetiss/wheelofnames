@@ -45,7 +45,7 @@ body {
 
 canvas {
     width: 100%;
-    max-width: 350px; /* Kích thước hợp lý cho cả PC & ĐT */
+    max-width: 400px; /* Kích thước hợp lý cho cả PC & ĐT */
     height: auto;
     display: block;
     margin: 0 auto;

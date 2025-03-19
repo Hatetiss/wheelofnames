@@ -52,19 +52,14 @@ function updateNameList() {
 function editName(index, newName) {
     if (newName) {
         names[index] = newName;
-        luumau();
         drawWheel();
     }
 }
-let mau = [];
 // Xóa tên
 function deleteName(index) {
     names.splice(index, 1);
     updateNameList();
     drawWheel();
-}
-function luumau() {
-    mau = names.map(() => getRandomColor());
 }
 // Vẽ vòng quay (Màu random)
 function drawWheel() {
@@ -79,9 +74,9 @@ function drawWheel() {
 
     names.forEach((name, index) => {
         ctx.beginPath();
-        ctx.moveTo(150, 150);
-        ctx.arc(150, 150, 150, index * sliceAngle, (index + 1) * sliceAngle);
-        ctx.fillStyle = mau[index];
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, index * sliceAngle, (index + 1) * sliceAngle);
+        ctx.fillStyle = getRandomColor() ;
         ctx.fill();
         ctx.stroke();
 

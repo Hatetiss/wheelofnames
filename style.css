@@ -11,11 +11,12 @@ body {
     padding: 20px;
 }
 .delete-button {
+    width: 5px;
+    height: 5px;
     background: none;
     color: red;
     border: none;
     font-size: 16px;
-    padding: 4px 4px;
     border-radius: 50%;
     cursor: pointer;
     transition: 0.3s;

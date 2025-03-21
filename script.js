@@ -101,11 +101,18 @@ function drawWheel() {
 
         // Hiển thị tên
         ctx.fillStyle = "white";
-        ctx.font = "14px Arial";
+        let radius = canvas.height / 2;
+        let fontSize = Math.max(12, radius / 10); // Cỡ chữ tỉ lệ với vòng tròn
+        ctx.font = `${fontSize}px Arial`;
         let textAngle = (index + 0.5) * sliceAngle;
         let x = canvas.width / 2 + Math.cos(textAngle) * (canvas.height / 3);
         let y = canvas.height / 2 + Math.sin(textAngle) * (canvas.height / 3);
         ctx.fillText(name, x - ctx.measureText(name).width / 2, y);
+        ctx.save(); // Lưu trạng thái canvas
+        ctx.translate(x, y); // Dịch chuyển vị trí chữ về tọa độ mới
+        ctx.rotate(textAngle + Math.PI / 2); // Xoay chữ theo hình quạt
+        ctx.fillText(name, 0, 0); // Vẽ chữ tại vị trí mới
+        ctx.restore(); // Khôi phục trạng thái ban đầu
     });
 
     ctx.resetTransform(); // Reset để không bị xoay chồng lên nhau

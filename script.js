@@ -5,6 +5,20 @@ const ctx = canvas.getContext("2d");
 let spinning = false; // Trạng thái quay
 let angle = 0; // Góc quay hiện tại
 let spinSpeed = 0; // Tốc độ quay
+// Tăng độ phân giải canvas để không bị vỡ
+function fixCanvas() {
+    let dpr = window.devicePixelRatio || 1; 
+    let size = Math.min(window.innerWidth * 0.9, 600); 
+    canvas.width = size * dpr; 
+    canvas.height = size * dpr;
+    canvas.style.width = size + "px";
+    canvas.style.height = size + "px";
+    ctx.scale(dpr, dpr); 
+    drawWheel();
+}
+
+window.addEventListener("resize", fixCanvas);
+fixCanvas();
 
 // Xử lý khi bấm Enter
 document.getElementById("nameInput").addEventListener("keypress", function (event) {

@@ -40,12 +40,12 @@ body {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    max-width: 400px; /* Định giới hạn tối đa */
+    max-width: 600px; /* Định giới hạn tối đa */
     margin: 0 auto;
 }
 
 canvas {
-    width:200%;
+    width:100%;
     height: auto;
     display: block;
     

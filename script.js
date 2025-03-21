@@ -107,7 +107,6 @@ function drawWheel() {
         let textAngle = (index + 0.5) * sliceAngle;
         let x = canvas.width / 2 + Math.cos(textAngle) * (canvas.height / 3);
         let y = canvas.height / 2 + Math.sin(textAngle) * (canvas.height / 3);
-        ctx.fillText(name, x - ctx.measureText(name).width / 2, y);
         ctx.save(); // Lưu trạng thái canvas
         ctx.translate(x, y); // Dịch chuyển vị trí chữ về tọa độ mới
         ctx.rotate(textAngle + Math.PI / 2); // Xoay chữ theo hình quạt

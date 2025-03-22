@@ -20,6 +20,7 @@ function fixCanvas() {
 
 window.addEventListener("resize", fixCanvas);
 fixCanvas();
+drawWheel();
 
 // Xử lý khi bấm Enter
 document.getElementById("nameInput").addEventListener("keypress", function (event) {
@@ -43,7 +44,7 @@ function addName() {
         }
         updateNameList();
         nameInput.value = "";
-        fixCanvas();
+        drawWheel();
     }
 }
 // Cập nhật danh sách tên hiển thị (có nút chỉnh sửa & xóa)
@@ -74,7 +75,7 @@ function editName(index, newName) {
     if (newName) {
         names[index] = newName;
         luumau[index]= getRandomColor();
-        fixCanvas();
+        drawWheel();
     }
 }
 // Xóa tên
@@ -83,7 +84,7 @@ function deleteName(index) {
     luumau.splice(index, 1);
     listgoc.pop();
     updateNameList();
-    fixCanvas();
+    drawWheel();
 }
 
 // Vẽ vòng quay (Màu random)

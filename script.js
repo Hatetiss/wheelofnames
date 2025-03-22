@@ -5,7 +5,8 @@ const ctx = canvas.getContext("2d");
 let spinning = false; // Trạng thái quay
 let angle = 0; // Góc quay hiện tại
 let spinSpeed = 0; // Tốc độ quay
-let listgoc = [];
+let listgoc = []; // Lưu góc bắt đầu và kết thúc
+
 // Tăng độ phân giải canvas để không bị vỡ
 function fixCanvas() {
     let dpr = window.devicePixelRatio || 1; 
@@ -37,17 +38,13 @@ function addName() {
     if (name) {
         names.push(name);
         luumau.push(getRandomColor());
-        if (listgoc.length < 1) {
-            listgoc.push([0,1]);
-        }    
-        else {
-            listgoc.push([listgoc[listgoc.length - 1][1], listgoc[listgoc.length - 1][1] + 1]);
-        }
+        updateAngles(); // Cập nhật góc khi thêm tên
         updateNameList();
         nameInput.value = "";
         drawWheel();
     }
 }
+
 // Cập nhật danh sách tên hiển thị (có nút chỉnh sửa & xóa)
 function updateNameList() {
     let nameList = document.getElementById("nameList");
@@ -75,24 +72,34 @@ function updateNameList() {
 function editName(index, newName) {
     if (newName) {
         names[index] = newName;
-        luumau[index]= getRandomColor();
         drawWheel();
     }
 }
+
 // Xóa tên
 function deleteName(index) {
     names.splice(index, 1);
     luumau.splice(index, 1);
-    listgoc.pop();
+    updateAngles(); // Cập nhật lại danh sách góc
     updateNameList();
     drawWheel();
+}
+
+// Cập nhật danh sách góc theo số phần tử hiện có
+function updateAngles() {
+    listgoc = [];
+    let total = names.length;
+    for (let i = 0; i < total; i++) {
+        let startAngle = (i / total) * 2 * Math.PI;
+        let endAngle = ((i + 1) / total) * 2 * Math.PI;
+        listgoc.push([startAngle, endAngle]);
+    }
 }
 
 // Vẽ vòng quay (Màu random)
 function drawWheel() {
     if (names.length === 0) return;
     let total = names.length;
-    let sliceAngle = 2 * Math.PI / total;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -102,24 +109,21 @@ function drawWheel() {
     names.forEach((name, index) => {
         ctx.beginPath();
         ctx.moveTo(canvas.width / 2, canvas.height / 2);
-        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, index * sliceAngle, (index + 1) * sliceAngle);
-        ctx.fillStyle = luumau[index] ;
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, listgoc[index][0], listgoc[index][1]);
+        ctx.fillStyle = luumau[index];
         ctx.fill();
         ctx.stroke();
 
         // Hiển thị tên
         ctx.fillStyle = "white";
-        let radius = canvas.height / 2;
-        let fontSize = Math.max(12, radius / 10); // Cỡ chữ tỉ lệ với vòng tròn
-        ctx.font = `${fontSize}px Arial`;
-        let textAngle = (index + 0.5) * sliceAngle;
+        let textAngle = (listgoc[index][0] + listgoc[index][1]) / 2;
         let x = canvas.width / 2 + Math.cos(textAngle) * (canvas.height / 3);
         let y = canvas.height / 2 + Math.sin(textAngle) * (canvas.height / 3);
-        ctx.save(); // Lưu trạng thái canvas
-        ctx.translate(x, y); // Dịch chuyển vị trí chữ về tọa độ mới
-        ctx.rotate(textAngle + Math.PI / 2); // Xoay chữ theo hình quạt
-        ctx.fillText(name, 0, 0); // Vẽ chữ tại vị trí mới
-        ctx.restore(); // Khôi phục trạng thái ban đầu
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(textAngle + Math.PI / 2);
+        ctx.fillText(name, 0, 0);
+        ctx.restore();
     });
 
     ctx.resetTransform(); // Reset để không bị xoay chồng lên nhau
@@ -145,12 +149,14 @@ function spinWheel() {
         } else {
             spinning = false;
             let winnerIndex = 0;
+            
             for (let i = 0; i < listgoc.length; i++) {
-                let tam = (Math.PI * 2)/(listgoc.length);
-                listgoc[i]=[(listgoc[i][0]*tam+angle)/(Math.PI * 2),(listgoc[i][1]*tam+angle)/(Math.PI * 2)];
-                if (listgoc[i][0] < (Math.PI / 2) && (Math.PI / 2) < listgoc[i][1])  {
+                if (listgoc[i][0] < Math.PI / 2 && Math.PI / 2 < listgoc[i][1]) {
                     winnerIndex = i;
-                }}
+                    break;
+                }
+            }
+            
             document.getElementById("result").textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;
         }
     }
@@ -158,4 +164,7 @@ function spinWheel() {
 }
 
 // Khi load trang, vẽ vòng quay
-window.onload = drawWheel;
+window.onload = function () {
+    updateAngles(); // Đảm bảo góc đúng ngay từ đầu
+    drawWheel();
+};

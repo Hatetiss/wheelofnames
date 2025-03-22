@@ -37,7 +37,7 @@ function addName() {
         luumau.push(getRandomColor());
         updateNameList();
         nameInput.value = "";
-        drawWheel();
+        fixCanvas();
     }
 }
 
@@ -69,7 +69,7 @@ function editName(index, newName) {
     if (newName) {
         names[index] = newName;
         luumau[index]= getRandomColor();
-        drawWheel();
+        fixCanvas();
     }
 }
 // Xóa tên
@@ -77,7 +77,7 @@ function deleteName(index) {
     names.splice(index, 1);
     luumau.splice(index, 1);
     updateNameList();
-    drawWheel();
+    fixCanvas();
 }
 
 // Vẽ vòng quay (Màu random)

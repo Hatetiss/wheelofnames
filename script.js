@@ -14,6 +14,7 @@ function fixCanvas() {
     canvas.height = size * dpr;
     canvas.style.width = size + "px";
     canvas.style.height = size + "px";
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr); 
     drawWheel();
 }

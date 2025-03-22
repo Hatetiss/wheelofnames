@@ -116,6 +116,8 @@ function drawWheel() {
 
         // Hiển thị tên
         ctx.fillStyle = "white";
+        let fontSize = Math.max(12, canvas.height / 10); // Cỡ chữ tỉ lệ với vòng tròn
+        ctx.font = `${fontSize}px Arial`;
         let textAngle = (listgoc[index][0] + listgoc[index][1]) / 2;
         let x = canvas.width / 2 + Math.cos(textAngle) * (canvas.height / 3);
         let y = canvas.height / 2 + Math.sin(textAngle) * (canvas.height / 3);

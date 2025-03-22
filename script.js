@@ -5,6 +5,7 @@ const ctx = canvas.getContext("2d");
 let spinning = false; // Trạng thái quay
 let angle = 0; // Góc quay hiện tại
 let spinSpeed = 0; // Tốc độ quay
+let listgoc = [];
 // Tăng độ phân giải canvas để không bị vỡ
 function fixCanvas() {
     let dpr = window.devicePixelRatio || 1; 
@@ -35,12 +36,16 @@ function addName() {
     if (name) {
         names.push(name);
         luumau.push(getRandomColor());
+        if (listgoc.length < 1) {
+            listgoc.push([0,1]);
+        }    else {
+            listgoc.push([listgoc[listgoc.length - 1][1], listgoc[listgoc.length - 1][1] + 1]);
+        }
         updateNameList();
         nameInput.value = "";
         fixCanvas();
     }
 }
-
 // Cập nhật danh sách tên hiển thị (có nút chỉnh sửa & xóa)
 function updateNameList() {
     let nameList = document.getElementById("nameList");
@@ -76,6 +81,7 @@ function editName(index, newName) {
 function deleteName(index) {
     names.splice(index, 1);
     luumau.splice(index, 1);
+    listgoc.pop();
     updateNameList();
     fixCanvas();
 }
@@ -136,7 +142,13 @@ function spinWheel() {
             requestAnimationFrame(animateSpin);
         } else {
             spinning = false;
-            let winnerIndex = Math.floor(((angle % (2 * Math.PI)) / (2 * Math.PI)) * names.length);
+            let winnerIndex = 0;
+            for (let i = 0; i < listgoc.length; i++) {
+                let tam = (Math.PI * 2)/(listgoc.length);
+                listgoc[i]=[(listgoc[i][0]*tam+angle)/(Math.PI * 2),(listgoc[i][1]*tam+angle)/(Math.PI * 2)];
+                if listgoc[i][0] < (Math.PI / 2) < listgoc[i][1] {
+                    winnerIndex = i;
+                }}
             document.getElementById("result").textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;
         }
     }

@@ -143,25 +143,31 @@ function spinWheel() {
     spinSpeed = Math.random() * 10 + 20; // Tốc độ ngẫu nhiên
 
     function animateSpin() {
-        if (spinSpeed > 0.2) {
-            angle += spinSpeed * Math.PI / 180;
-            spinSpeed *= 0.98; // Giảm tốc từ từ
-            drawWheel();
-            requestAnimationFrame(animateSpin);
-        } else {
-            spinning = false;
-            
-            for (let i = 0; i < listgoc.length; i++) {
-                if (listgoc[i][0] < Math.PI / 2 && Math.PI / 2 < listgoc[i][1]) {
-                    let winnerIndex = i;
-                    break;
-                }
+    if (spinSpeed > 0.2) {
+        angle += spinSpeed * Math.PI / 180;
+        spinSpeed *= 0.98;
+        drawWheel();
+        requestAnimationFrame(animateSpin);
+    } else {
+        spinning = false;
+
+        let winnerIndex = -1;  // Đặt mặc định là -1 để kiểm tra
+        for (let i = 0; i < listgoc.length; i++) {
+            let adjustedAngle = (angle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI); // Chuyển angle về khoảng 0 → 2π
+            if (listgoc[i][0] <= adjustedAngle && adjustedAngle <= listgoc[i][1]) {
+                winnerIndex = i;
+                break; // Thoát ngay khi tìm được
             }
-            
+        }
+
+        if (winnerIndex !== -1) {
             document.getElementById("result").textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;
-            
+        } else {
+            document.getElementById("result").textContent = `❌ Không tìm thấy người thắng, thử lại nhé!`;
         }
     }
+}
+
     animateSpin();
 }
 

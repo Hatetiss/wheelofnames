@@ -84,6 +84,11 @@ input {
     font-size: 18px;
     text-align: center;
 }
+#nameList li {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Khoảng cách giữa tên & nút X */
+}
 
 /* --- Nút bấm đẹp và dễ bấm trên cảm ứng --- */
 button {

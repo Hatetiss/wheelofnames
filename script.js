@@ -150,16 +150,16 @@ function spinWheel() {
             requestAnimationFrame(animateSpin);
         } else {
             spinning = false;
-            let winnerIndex = 0;
             
             for (let i = 0; i < listgoc.length; i++) {
                 if (listgoc[i][0] < Math.PI / 2 && Math.PI / 2 < listgoc[i][1]) {
-                    winnerIndex = i;
+                    let winnerIndex = i;
                     break;
                 }
             }
             
             document.getElementById("result").textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;
+            
         }
     }
     animateSpin();

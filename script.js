@@ -21,7 +21,6 @@ function fixCanvas() {
 
 window.addEventListener("resize", fixCanvas);
 fixCanvas();
-drawWheel();
 
 // Xử lý khi bấm Enter
 document.getElementById("nameInput").addEventListener("keypress", function (event) {
@@ -40,7 +39,8 @@ function addName() {
         luumau.push(getRandomColor());
         if (listgoc.length < 1) {
             listgoc.push([0,1]);
-        }    else {
+        }    
+        else {
             listgoc.push([listgoc[listgoc.length - 1][1], listgoc[listgoc.length - 1][1] + 1]);
         }
         updateNameList();
@@ -148,7 +148,7 @@ function spinWheel() {
             for (let i = 0; i < listgoc.length; i++) {
                 let tam = (Math.PI * 2)/(listgoc.length);
                 listgoc[i]=[(listgoc[i][0]*tam+angle)/(Math.PI * 2),(listgoc[i][1]*tam+angle)/(Math.PI * 2)];
-                if listgoc[i][0] < (Math.PI / 2) < listgoc[i][1] {
+                if (listgoc[i][0] < (Math.PI / 2) && (Math.PI / 2) < listgoc[i][1])  {
                     winnerIndex = i;
                 }}
             document.getElementById("result").textContent = `🎉 Chúc mừng ${names[winnerIndex]} đã trúng thưởng! 🎊`;

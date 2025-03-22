@@ -23,6 +23,7 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: 0.3s;
+    flex-direction: row;
 }
 
 .delete-button:hover {
